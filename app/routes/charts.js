@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 
 const findAll = (req, res) => {
   res.send([
@@ -27,17 +28,11 @@ const findById = (req, res) => {
   res.send(json);
 };
 
+// BUGFIX :: where do we specify an id?
 const getGraphsById = (req, res) => {
-  const reqDate = new Date();
-  const yyyy = reqDate.getFullYear();
-  let dd = reqDate.getDate();
-  let mm = reqDate.getMonth() + 1;
-  if (dd < 10) {
-    dd = '0' + dd;
-  }
-  if (mm < 10) {
-    mm = '0' + mm;
-  }
+  const reqDate = moment();
+  const mm = reqDate.add(1, 'months').format('MM');  // BUGFIX :: remove month increment?
+  const yyyy = reqDate.year();
   const json = [
     {date:`${yyyy}-${mm}-01`, s1:31, s2:263, s3:159, s4:22, s5:270},
     {date:`${yyyy}-${mm}-02`, s1:14, s2:260, s3:158, s4:12, s5:276},
@@ -51,42 +46,36 @@ const getGraphsById = (req, res) => {
 };
 
 const getGraphsForDate = (req, res) => {
-  const reqDate = new Date(req.params.date + ' 01:00:00');
-  const yyyy = reqDate.getFullYear();
-  let dd = reqDate.getDate();
-  let mm = reqDate.getMonth() + 1;
-  if (dd < 10) {
-    dd = '0' + dd;
-  }
-  if (mm < 10) {
-    mm = '0' + mm;
-  }
-  const newDate = `${yyyy}-${mm}-${dd}`;
+  const reqDate = moment(req.params.date).hour(1);  // BUGFIX :: remove hour set?
+  const dd = reqDate.format('DD');
+  const mm = reqDate.add(1, 'months').format('MM');  // BUGFIX :: remove month increment?
+  const yyyy = reqDate.year();
+  const date = `${yyyy}-${mm}-${dd}`;
   let json;
   switch (dd) {
     case '01':
-      json = {date:newDate, s1:31, s2:263, s3:159, s4:22, s5:270};
+      json = {date, s1:31, s2:263, s3:159, s4:22, s5:270};
       break;
     case '02':
-      json = {date:newDate, s1:14, s2:260, s3:158, s4:12, s5:276};
+      json = {date, s1:14, s2:260, s3:158, s4:12, s5:276};
       break;
     case '03':
-      json = {date:newDate, s1:24, s2:265, s3:164, s4:19, s5:269};
+      json = {date, s1:24, s2:265, s3:164, s4:19, s5:269};
       break;
     case '04':
-      json = {date:newDate, s1:23, s2:269, s3:168, s4:19, s5:276};
+      json = {date, s1:23, s2:269, s3:168, s4:19, s5:276};
       break;
     case '05':
-      json = {date:newDate, s1:25, s2:272, s3:168, s4:17, s5:279};
+      json = {date, s1:25, s2:272, s3:168, s4:17, s5:279};
       break;
     case '06':
-      json = {date:newDate, s1:5,  s2:259, s3:160, s4:3,  s5:283};
+      json = {date, s1:5,  s2:259, s3:160, s4:3,  s5:283};
       break;
     case '07':
-      json = {date:newDate, s1:5,  s2:257, s3:159, s4:4,  s5:288};
+      json = {date, s1:5,  s2:257, s3:159, s4:4,  s5:288};
       break;
     default:
-      json = {date:newDate, s1:0,  s2:0,   s3:0,   s4:0,  s5:0};
+      json = {date, s1:0,  s2:0,   s3:0,   s4:0,  s5:0};
   }
   res.send(json);
 };
