@@ -1,8 +1,9 @@
-var express = require('express'), 
-    charts = require('./routes/charts.js');
+'use strict';
+const express = require('express');
+const charts = require('./routes/charts.js');
 
-var app = express();
- 
+const app = express();
+
 app.get('/charts', charts.findAll);
 app.get('/charts/:id', charts.findById);
 app.get('/charts/:id/graphs', charts.getGraphsById);
