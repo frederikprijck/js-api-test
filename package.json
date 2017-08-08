@@ -3,6 +3,7 @@
     "description": "JS API Test Application",
     "version": "0.0.1",
     "private": true,
+    "main": "app",
     "dependencies": {
         "express": "^4.15.4",
         "moment": "^2.18.1"
