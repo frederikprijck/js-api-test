@@ -1,0 +1,38 @@
+{
+  "name": "js-api-test",
+  "description": "JS API Test Application",
+  "version": "0.0.1",
+  "private": true,
+  "main": "app",
+  "dependencies": {
+    "angular": "^1.6.5",
+    "nodep-date-input-polyfill": "^5.1.0"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "gzip-size-cli": "^2.0.0",
+    "npm-watch": "~0.2.0",
+    "uglify-js": "^3.0.27"
+  },
+  "scripts": {
+    "build": "browserify src/app.js --transform [ babelify --presets [ env ] ] | uglifyjs --compress --mangle --output=dist/app.js && gzip-size dist/app.js",
+    "watch": "npm-watch build"
+  },
+  "watch": {
+    "build": {
+      "inherit": true,
+      "patterns": [
+        "src/**/*.js"
+      ]
+    },
+    "test": {
+      "inherit": true,
+      "patterns": [
+        "src/**/*.js",
+        "test/**/*.js"
+      ]
+    }
+  }
+}
