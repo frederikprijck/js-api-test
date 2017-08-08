@@ -1,15 +1,7 @@
 'use strict';
 const moment = require('moment');
 
-const findAll = (req, res) => {
-  res.send([
-    {id:1, name:'mysql'},
-    {id:2, name:'cpu'},
-    {id:3, name:'disk-sda01'}
-  ]);
-};
-
-const findById = (req, res) => {
+const getChartById = (req, res) => {
   const {id} = req.params;
   let json;
   switch (id) {
@@ -26,6 +18,14 @@ const findById = (req, res) => {
       json = {id, name:null, description:null};
   }
   res.send(json);
+};
+
+const getCharts = (req, res) => {
+  res.send([
+    {id:1, name:'mysql'},
+    {id:2, name:'cpu'},
+    {id:3, name:'disk-sda01'}
+  ]);
 };
 
 // BUGFIX :: where do we specify an id?
@@ -80,4 +80,4 @@ const getGraphsForDate = (req, res) => {
   res.send(json);
 };
 
-module.exports = {findAll, findById, getGraphsById, getGraphsForDate};
+module.exports = {getChartById, getCharts, getGraphsById, getGraphsForDate};
